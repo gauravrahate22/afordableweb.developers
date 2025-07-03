@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Dashboard - AWD</title>
+  <script>
+  const session = JSON.parse(localStorage.getItem('userSession'));
+
+  if (!session || !session.email || !session.role) {
+    alert('Session expired. Please login again.');
+    window.location.href = 'login.html';
+  }
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="stylesdashboard.css" />
+  <script src="dashboard.js" defer></script>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Dashboard</h2>
+    <a onclick="showSection('view')">View Projects</a>
+    <a onclick="showSection('apply')">Apply for New Project</a>
+   
+    <a onclick="showSection('progress')">View Project Progress</a>
+    <button class="logout-btn" id="logoutBtn">Logout</button>
+    <button class="toggle-mode" id="toggleMode">Toggle Mode</button>
+  </div>
+  <div class="main-content" id="mainContent"></div>
+  <h2 class="section-title" id="welcome-user"></h2>
+<a href="#" onclick="logout()">Logout</a>
+
+<script>
+  function logout() {
+    localStorage.removeItem('userSession');
+    window.location.href = 'login.html';
+  }
+</script>
+
+
+</body>
+</html>

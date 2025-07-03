@@ -1,0 +1,103 @@
+.pricing-hero {
+  text-align: center;
+  padding: 60px 20px 20px;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white;
+  border-radius: 0 0 20px 20px;
+}
+
+.pricing-container {
+  display: grid;
+  gap: 30px;
+  padding: 40px 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pricing-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  padding: 30px 20px;
+  text-align: center;
+  position: relative;
+  transition: 0.3s ease;
+}
+.pricing-card:hover {
+  transform: translateY(-8px);
+}
+
+.pricing-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #0072ff;
+}
+.price {
+  font-size: 2rem;
+  margin: 15px 0;
+  font-weight: bold;
+}
+
+.pricing-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+.pricing-card ul li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+.pricing-card ul li::before {
+  content: '✔';
+  color: #00c6ff;
+  margin-right: 8px;
+}
+
+.btn {
+  background-color: #00c6ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.btn:hover {
+  background-color: #0072ff;
+}
+
+.popular::before {
+  content: 'Most Popular';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff4081;
+  color: white;
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+/* Table styling */
+.table-container {
+  overflow-x: auto;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+.pricing-table thead {
+  background: #0072ff;
+  color: white;
+}
+.pricing-table th, .pricing-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+}

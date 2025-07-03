@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment - Affordable Web Development</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+    }
+    .payment-box {
+      max-width: 600px;
+      margin: auto;
+      padding: 30px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: #fff;
+    }
+    h2 {
+      text-align: center;
+    }
+    .upi-info, .summary {
+      margin-top: 20px;
+    }
+    .btn-pay {
+      margin-top: 30px;
+      display: block;
+      width: 100%;
+      background: #28a745;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .btn-pay:hover {
+      background: #218838;
+    }
+    .qr {
+      max-width: 200px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-box">
+    <h2>Complete Your Payment</h2>
+    <div class="summary" id="projectSummary"></div>
+
+    <div class="upi-info">
+      <h3>Pay via UPI</h3>
+      <p><strong>UPI ID:</strong> awd@upi</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=awd@upi&pn=Affordable%20Web%20Dev&am=999" class="qr" alt="UPI QR Code" />
+      <p>Scan the QR code using your UPI app or use the ID above to pay.</p>
+    </div>
+
+    <button class="btn-pay" onclick="confirmPayment()">Confirm Payment</button>
+  </div>
+
+  <script>
+    const summaryDiv = document.getElementById('projectSummary');
+    const projectData = JSON.parse(localStorage.getItem('project_form_data'));
+
+    if (!projectData) {
+      summaryDiv.innerHTML = "<p>No project data found. Please apply again.</p>";
+    } else {
+      summaryDiv.innerHTML = `
+        <h3>Project Summary</h3>
+        <p><strong>Type:</strong> ${projectData.type}</p>
+        <p><strong>Plan:</strong> ${projectData.plan}</p>
+        <p><strong>Details:</strong> ${projectData.details}</p>
+        <p><strong>Media File:</strong> ${projectData.mediaName || 'None'}</p>
+        <hr />
+      `;
+    }
+
+    function confirmPayment() {
+      if (!projectData) return;
+
+      const allProjects = JSON.parse(localStorage.getItem('user_projects')) || [];
+      allProjects.push(projectData);
+      localStorage.setItem('user_projects', JSON.stringify(allProjects));
+
+      alert("Payment confirmed! Your project has been submitted.");
+      localStorage.removeItem('project_form_data');
+      window.location.href = "dashboard.html";
+    }
+  </script>
+</body>
+</html>

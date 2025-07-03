@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects | Affordable Web Development</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="projects.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">AWD</div>
+      <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="login.html">Login/Signup</a></li>
+      </ul>
+      <button id="darkToggle" class="dark-toggle" title="Toggle Dark Mode">
+        <i class="fas fa-moon"></i>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="hero-section" data-aos="fade-up">
+      <h1>Welcome to Affordable Web Development</h1>
+      <p>We build premium websites using modern design and cutting-edge technology.</p>
+      <a class="btn-glow" href="contact.html">Start Your Project</a>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats-section" data-aos="fade-up">
+      <h2>Our Impact</h2>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <i class="fas fa-code stat-icon"></i>
+          <h3><span id="projects">0</span>+</h3>
+          <p>Projects Completed</p>
+        </div>
+        <div class="stat-box">
+          <i class="fas fa-users stat-icon"></i>
+          <h3><span id="clients">0</span>+</h3>
+          <p>Happy Clients</p>
+        </div>
+        <div class="stat-box">
+          <i class="fas fa-briefcase stat-icon"></i>
+          <h3><span id="years">0</span>+</h3>
+          <p>Years of Experience</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" data-aos="fade-up">
+      <h2>What Our Clients Say</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <p>"Gaurav's team built our site faster than expected. Highly recommend!"</p>
+          <strong><i class="fas fa-user-circle"></i> TechSpark</strong>
+        </div>
+        <div class="testimonial-card">
+          <p>"Fantastic design and smooth functionality. 10/10!"</p>
+          <strong><i class="fas fa-user-circle"></i> UrbanBrands</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons" data-aos="fade-up">
+      <button class="filter-btn" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="js">JavaScript</button>
+      <button class="filter-btn" data-filter="api">API</button>
+    </div>
+
+    <!-- Projects -->
+    <section class="projects-section" data-aos="fade-up">
+      <h2>Our Work</h2>
+      <div class="projects-grid">
+        <div class="project-card" data-category="api js">
+          <img src="w.png" alt="Weather App" loading="lazy">
+          <h3>Weather App</h3>
+          <p>Real-time weather forecast using OpenWeather API.</p>
+          <a href="https://github.com/gauravrahate22/weatherapp" target="_blank">View on GitHub</a>
+        </div>
+
+        <div class="project-card" data-category="js">
+          <img src="imagetictactoe.png" alt="Tic Tac Toe" loading="lazy">
+          <h3>Tic Tac Toe</h3>
+          <p>Classic game built with HTML, CSS, and JavaScript.</p>
+          <a href="https://github.com/gauravrahate22/tic-tac-toe" target="_blank">View on GitHub</a>
+        </div>
+
+        <div class="project-card" data-category="js">
+          <img src="imagestopwatch.png" alt="Stopwatch" loading="lazy">
+          <h3>Stopwatch</h3>
+          <p>Responsive stopwatch with pause and reset features.</p>
+          <a href="https://github.com/gauravrahate22/stopwatch" target="_blank">View on GitHub</a>
+        </div>
+
+        <div class="project-card" data-category="js">
+          <img src="image.png" alt="Portfolio Website" loading="lazy">
+          <h3>Portfolio Website</h3>
+          <p>Personal website to showcase projects and skills.</p>
+          <a href="https://github.com/gauravrahate22/portfolio" target="_blank">View on GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000 });
+  </script>
+</body>
+</html>

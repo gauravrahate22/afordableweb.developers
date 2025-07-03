@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Payment - Affordable Web Development</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f3f3f3;
+      padding: 20px;
+    }
+
+    .payment-container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    h2, h3 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"], input[type="email"], input[type="number"], select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .summary-box {
+      background-color: #f7f7f7;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .summary-box p {
+      margin: 5px 0;
+    }
+
+    .pay-btn {
+      background-color: #ff9900;
+      border: none;
+      padding: 12px 20px;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .pay-btn:hover {
+      background-color: #e68900;
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-container">
+    <h2>Checkout</h2>
+
+    <div class="section">
+      <h3>Project & Billing Details</h3>
+      <form id="paymentForm">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" required />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" required />
+
+        <label for="websiteType">Website Type</label>
+        <select id="websiteType" required>
+          <option value="">Select a type</option>
+          <option value="Commercial">Commercial</option>
+          <option value="Portfolio">Portfolio</option>
+          <option value="Personal">Personal</option>
+          <option value="eCommerce">eCommerce</option>
+          <option value="Blog">Blog</option>
+          <option value="Educational">Educational</option>
+          <option value="Non-profit">Non-profit</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Landing Page">Landing Page</option>
+        </select>
+
+        <label for="projectDetails">Project Description</label>
+        <textarea id="projectDetails" rows="4" placeholder="Explain how you'd like your website to look..." required></textarea>
+
+        <label for="mediaUpload">Upload Media (Optional)</label>
+        <input type="file" id="mediaUpload" accept="image/*,.pdf,.doc,.docx" />
+
+        <label for="card">Card Number</label>
+        <input type="text" id="card" placeholder="xxxx-xxxx-xxxx-xxxx" required />
+
+        <label for="expiry">Expiry Date</label>
+        <input type="text" id="expiry" placeholder="MM/YY" required />
+
+        <label for="cvv">CVV</label>
+        <input type="number" id="cvv" required />
+      </form>
+    </div>
+
+    <div class="section summary-box">
+      <h3>Order Summary</h3>
+      <p><strong>Plan:</strong> <span id="planName"></span></p>
+      <p><strong>Total:</strong> ₹<span id="planPrice"></span></p>
+    </div>
+
+    <button class="pay-btn" onclick="processPayment()">Pay Now</button>
+  </div>
+
+  <script>
+    const planData = JSON.parse(localStorage.getItem("selected_plan"));
+    document.getElementById("planName").textContent = planData?.plan || "N/A";
+    document.getElementById("planPrice").textContent = planData?.price || "0";
+
+    function processPayment() {
+      const name = document.getElementById("fullname").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const card = document.getElementById("card").value.trim();
+      const expiry = document.getElementById("expiry").value.trim();
+      const cvv = document.getElementById("cvv").value.trim();
+      const type = document.getElementById("websiteType").value;
+      const details = document.getElementById("projectDetails").value.trim();
+
+      if (!name || !email || !card || !expiry || !cvv || !type || !details) {
+        alert("Please fill out all required fields correctly.");
+        return;
+      }
+
+      const project = {
+        name,
+        email,
+        type,
+        details,
+        plan: planData?.plan || "",
+        price: planData?.price || 0,
+        progress: "Pending"
+      };
+
+      const existingProjects = JSON.parse(localStorage.getItem("user_projects")) || [];
+      existingProjects.push(project);
+      localStorage.setItem("user_projects", JSON.stringify(existingProjects));
+
+      alert("Payment successful! Your project has been submitted.");
+      localStorage.removeItem("selected_plan");
+      window.location.href = "dashboard.html";
+    }
+  </script>
+</body>
+</html>

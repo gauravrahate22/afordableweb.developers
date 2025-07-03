@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; padding: 20px; }
+    .logout-btn { float: right; padding: 8px 16px; background: crimson; color: white; border: none; border-radius: 6px; cursor: pointer; }
+    .logout-btn:hover { background: darkred; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; }
+    th { background: #eee; }
+    select, input { padding: 6px; margin: 4px; }
+    .btn-update { padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>Admin Project Dashboard</h2>
+  <button onclick="logout()" class="logout-btn">Logout</button>
+
+  <div class="filters">
+    <input type="text" id="searchEmail" placeholder="Search by Email" oninput="renderTable()" />
+    <select id="filterType" onchange="renderTable()">
+      <option value="">All Types</option>
+      <option value="Commercial">Commercial</option>
+      <option value="Portfolio">Portfolio</option>
+      <option value="Personal">Personal</option>
+      <option value="eCommerce">eCommerce</option>
+    </select>
+    <select id="filterProgress" onchange="renderTable()">
+      <option value="">All Statuses</option>
+      <option value="Pending">Pending</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Completed">Completed</option>
+      <option value="On Hold">On Hold</option>
+    </select>
+  </div>
+
+  <table id="projectsTable">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Website Type</th>
+        <th>Details</th>
+        <th>Plan</th>
+        <th>Media</th>
+        <th>Progress</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    // Session check
+    document.addEventListener('DOMContentLoaded', () => {
+      const isAdmin = localStorage.getItem('adminLoggedIn') === 'true';
+      const adminEmail = localStorage.getItem('loggedInAdmin');
+
+      if (!isAdmin || adminEmail !== 'admin@awd.com') {
+        alert('Unauthorized access.');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      renderTable();
+      resetLogoutTimer();
+    });
+
+    function logout() {
+      localStorage.removeItem("adminLoggedIn");
+      localStorage.removeItem("loggedInAdmin");
+      window.location.href = "login.html";
+    }
+
+    function renderTable() {
+      const projects = JSON.parse(localStorage.getItem("user_projects")) || [];
+      const tbody = document.querySelector("#projectsTable tbody");
+      tbody.innerHTML = "";
+
+      const emailFilter = document.getElementById("searchEmail").value.toLowerCase();
+      const typeFilter = document.getElementById("filterType").value;
+      const progressFilter = document.getElementById("filterProgress").value;
+
+      projects.forEach((p, i) => {
+        if (
+          (emailFilter && !p.email.toLowerCase().includes(emailFilter)) ||
+          (typeFilter && p.type !== typeFilter) ||
+          (progressFilter && p.progress !== progressFilter)
+        ) return;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${p.email}</td>
+          <td>${p.type}</td>
+          <td>${p.details}</td>
+          <td>${p.plan}</td>
+          <td>${p.mediaName || "None"}</td>
+          <td>
+            <select onchange="updateProgress(${i}, this.value)">
+              <option value="Pending" ${p.progress === "Pending" ? "selected" : ""}>Pending</option>
+              <option value="In Progress" ${p.progress === "In Progress" ? "selected" : ""}>In Progress</option>
+              <option value="Completed" ${p.progress === "Completed" ? "selected" : ""}>Completed</option>
+              <option value="On Hold" ${p.progress === "On Hold" ? "selected" : ""}>On Hold</option>
+            </select>
+          </td>
+          <td><button class="btn-update" onclick="notifyUser(${i})">Notify</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function updateProgress(index, status) {
+      const projects = JSON.parse(localStorage.getItem("user_projects")) || [];
+      projects[index].progress = status;
+      localStorage.setItem("user_projects", JSON.stringify(projects));
+      renderTable();
+    }
+
+    function notifyUser(index) {
+      const projects = JSON.parse(localStorage.getItem("user_projects")) || [];
+      alert(`User ${projects[index].email} notified of status: ${projects[index].progress}`);
+    }
+
+    // Auto logout after 10 mins
+    let logoutTimer;
+    function resetLogoutTimer() {
+      clearTimeout(logoutTimer);
+      logoutTimer = setTimeout(() => {
+        alert("Session expired. Logging out.");
+        logout();
+      }, 10 * 60 * 1000);
+    }
+    ['click', 'mousemove', 'keypress', 'scroll'].forEach(event =>
+      document.addEventListener(event, resetLogoutTimer)
+    );
+  </script>
+</body>
+</html>
